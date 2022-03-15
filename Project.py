@@ -41,7 +41,17 @@ R_t= [[  0.9998000, -0.0001200,  0.0199982,1.95],
   [-0.0199982, -0.0119989,  0.9997280,1.29 ],
   [0,0,0,1]]
 
-cam.attitudeMat(np.eye(4))
+R_t2= [[  1, 0,  0,1.95],
+  [0,  1,  0,0],
+  [0, 0,  1,1.29 ],
+  [0,0,0,1]]
+
+R_t3=[[  0.9998000, -0.0001200,  0.0199982,0],
+  [-0.0001200,  0.9999280,  0.0119989,0],
+  [-0.0199982, -0.0119989,  0.9997280,0 ],
+  [0,0,0,1]]
+
+cam.attitudeMat(R_t3)
 # cam.attitudeMat(R_t)
 # K = np.array([[1613.33, 0 , 640],
 #              [0, 1613.33, 480],
@@ -58,8 +68,13 @@ points2= points.copy()
 
 view_points2d = cam.project(points2) 
 p = view_points2d
+p= np.nan_to_num(p, copy=True, nan=0.0, posinf=None, neginf=None)
 
 selection = np.all((p[:, 0] >= 0, p[:, 0] < png.shape[1], p[:, 1] >= 0, p[:, 1] < png.shape[0]), axis=0)
+# selection = np.where((p[0, :] < IMG_W) & (p[0, :] >= 0) &
+#                     (p[1, :] < IMG_H) & (p[1, :] >= 0) 
+#                     # & (points[:, 2] > 0)
+#                     )[0]
 
 p = p[selection]
 #%%
