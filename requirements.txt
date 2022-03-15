@@ -1,0 +1,5 @@
+numpy='1.21.2'
+matplotlib='3.4.3'
+pandas='1.1.3'
+camproject= '0.42'
+opencv = '4.5.5'
